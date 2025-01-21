@@ -1,13 +1,20 @@
 # Beepergotchi
 
 ## Hardware
-Raspberry Pi Zero 2 W
-PiSugar 3 1200 mAh battery
-Pimoroni Display Hat Mini
-ATGM 336H GPS Radio
+Raspberry Pi Zero 2 W  
+PiSugar 3 1200 mAh battery  
+Pimoroni Display Hat Mini  
+ATGM 336H GPS Radio  
+
+## Wiring the GPS Radio to the Pi Zero
+GPS       Pi
+VCC  ->   3.3v (pin 1)
+GND  ->   GND (pin 14)
+TX   ->   UART RX (pin 10)
+RX   ->   UART TX (pin 8)
 
 ## 3D Printed Case
-Coming soon
+Coming soon  
 
 ## Building the image
 Flash the latest jayofelony image  
