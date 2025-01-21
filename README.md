@@ -1,1 +1,270 @@
 # Beepergotchi
+
+Flash the latest jayofelony image  
+[jayofelony github](https://github.com/jayofelony/pwnagotchi)  
+Using [Raspberry Pi Imager](https://www.raspberrypi.com/software/)  
+Boot with keyboard and monitor connected  
+Configure username/password  
+Power off  
+Swap keyboard for ethernet  
+Boot  
+
+## Set Local Timezone
+```
+sudo raspi-config
+	-> Localization Options
+	-> Timezone
+```
+
+## System Update and install vim
+```
+sudo apt update
+sudo apt upgrade
+sudo apt install vim
+```
+
+## Pi Sugar 3 RTC
+[Pi Sugar github](https://github.com/PiSugar/pisugar-power-manager-rs)
+
+```
+wget https://cdn.pisugar.com/release/pisugar-power-manager.sh
+bash pisugar-power-manager.sh -c release
+```
+
+Browse to port 8421 in a web browser on the Pi's IP address  
+Login with the credentials you configured  
+You should see the Pi Sugar control interface  
+
+## Generate /etc/pwnagotchi/config.toml by loading plugins page
+Browse to port 8080 in a web browser on the Pi's IP address  
+Click on plugins  
+
+> Optional - disable grid plugin
+
+validate /etc/pwnagotchi/config.toml now exists
+
+## Install PiSugar3 plugin for Pwnagotchi
+[nullm0ose PiSugar3 plugin](https://github.com/nullm0ose/pwnagotchi-plugin-pisugar3/tree/main)
+```
+git clone https://github.com/nullm0ose/pwnagotchi-plugin-pisugar3.git
+cd pwnagotchi-plugin-pisugar3
+sudo cp pisugar3.py /usr/local/share/pwnagotchi/custom-plugins/
+sudo vim /etc/pwnagotchi/config.toml
+```
+Add these settings to config.toml:  
+> main.plugins.pisugar3.enabled = true  
+> main.plugins.pisugar3.shutdown = 5  
+```
+sudo systmctl restart pwnagotchi
+```
+Browse to port 8080 in a web browser on the Pi's IP address  
+The power status should show up at the top of the pwnagotchi display in the browser  
+
+## Setting up GPSd on the Pi
+```
+sudo raspi-config
+   -> Interface Options
+   -> Serial Port
+   -> Disable login shell over serial
+   -> Enable serial port hardware
+reboot
+sudo apt install gpsd gpsd-clients
+gpsd -V
+```
+We will see version 3.22 which needs to be uninstalled
+```
+sudo apt remove gpsd
+```
+The fix for 3.22 only pulling the location from first fix can be found on this thread post:  
+[why does gpsd not update a location past its first fix](https://raspberrypi.stackexchange.com/questions/136196/why-does-gpsd-not-update-a-location-past-its-first-fix)  
+```
+sudo apt install scons
+wget http://download.savannah.gnu.org/releases/gpsd/gpsd-3.25.tar.gz
+tar -zxvf gpsd-3.25.tar.gz
+cd gpsd-3.25/
+sudo scons
+sudo scons install
+which gpsd
+/usr/local/sbin/gpsd -V
+```
+validate we are now running version 3.25
+```
+sudo rm /etc/default/gpsd
+```
+```
+sudo bash -c 'cat > /etc/default/gpsd' << EOF
+# Default settings for the gpsd init script and the hotplug wrapper.
+
+# Start the gpsd daemon automatically at boot time
+START_DAEMON="true"
+
+# Use USB hotplugging to add new USB devices automatically to the daemon
+USBAUTO="false"
+
+# Devices gpsd should collect to at boot time.
+# They need to be read/writeable, either by user gpsd or the group dialout.
+DEVICES="/dev/ttyS0"
+# or, if you want to setup with BlueNMEA on your android phone, with bt-tethering :
+# DEVICES="tcp://192.168.44.1:4352"
+
+# Other options you want to pass to gpsd
+GPSD_OPTIONS="-n -F /var/run/gpsd.sock"
+EOF
+```
+Finish creating the gpsd.service following this forum topic:  
+[gpsd failing on boot, but starts manually](https://forums.raspberrypi.com/viewtopic.php?t=53644)  
+```
+which gpsd
+```
+take note to modify ExecStart line below
+```
+sudo vim /etc/systemd/system/gpsd.service
+```
+```
+[Unit]
+Description=GPS (Global Positioning System) Daemon
+Requires=gpsd.socket
+# Needed with chrony SOCK refclock
+# After=chronyd.service
+
+[Service]
+EnvironmentFile=-/etc/default/gpsd
+EnvironmentFile=-/etc/sysconfig/gpsd
+ExecStart=/usr/local/sbin/gpsd -N $GPSD_OPTIONS $DEVICES
+
+[Install]
+WantedBy=multi-user.target
+Also=gpsd.socket
+```
+```
+sudo systemctl enable gpsd.service
+sudo reboot
+gpsmon
+```
+Once we get a GPS fix, we should now see current location data in gpsmon  
+
+## Enable bettermon interface during auto mode
+```
+cd /usr/local/share/bettercap/caplets/
+> backup original auto caplet incase you need to restore later
+cp pwnagotchi-auto.cap /home/pi
+sudo cp pwnagotchi-manual.cap pwnagotchi-auto.cap
+sudo reboot
+```
+
+## Configure GPS for bettercap
+Browse to the Pi's IP Address in a browser
+> Advanced -> gps  
+> baud rate 9600  
+> click the save button on baud rate  
+> device 127.0.0.1:2947  
+> click the save button on device  
+> click gps on
+> click Position on the top menu bar and validate you have location after you get a GPS fix
+
+## Install gpsd library for python
+```
+sudo pip3 install --break-system-packages gpsd-py3
+```
+
+## Install GPSd plugin for pwnagotchi
+[kellertk gpsd plugin](https://github.com/kellertk/pwnagotchi-plugin-gpsd)
+```
+git clone https://github.com/kellertk/pwnagotchi-plugin-gpsd.git
+cd pwnagotchi-plugin-gpsd
+sudo cp gpsd.py /usr/local/share/pwnagotchi/custom-plugins/
+sudo vim /etc/pwnagotchi/config.toml
+```
+> main.plugins.gpsd.enabled = true  
+> main.plugins.gpsd.gpsdhost = "127.0.0.1"  
+> main.plugins.gpsd.gpsdport = 2947  
+```
+sudo reboot
+```
+
+## Enable memtemp plugin
+Browse to port 8080 in a web browser on the Pi's IP address  
+>	plugins -> enable memtemp
+
+## Configure memtemp
+```
+sudo vim /etc/pwnagotchi/config.toml
+```
+> main.plugins.memtemp.scale = "fahrenheit"  
+> main.plugins.memtemp.orientation = "vertical"  
+
+## Enable screen and rotate it 180
+```
+sudo vim /etc/pwnagotchi/config.toml
+```
+> ui.display.enabled = true  
+> ui.display.rotation = 180  
+> ui.display.type = "displayhatmini"
+
+## Enable the Fancygotchi repo
+```
+sudo vim /etc/pwnagotchi/config.toml
+```
+Add the URL below to the existing main.custom_plugin_repos list
+
+> main.custom_plugin_repos = [  
+>  "https://github.com/V0r-T3x/Fancygotchi/archive/main.zip",  
+> ]  
+```
+sudo pwnagotchi plugins update
+sudo pwnagotchi plugins list
+sudo pwnagotchi plugins install Fancygotchi
+sudo reboot
+```
+Browse to port 8080 in a web browser on the Pi's IP address  
+> click on plugins  
+> enable Fancygotchi  
+> refresh the page  
+> click on Fancygotchi  
+> click on theme downloader  
+> click load theme list  
+> click select theme  
+> click theme manager  
+> select cyber theme from the drop down  
+> click select theme  
+
+## Installing the Wardriver plugin
+[cyberartemio's wardriver plugin](https://github.com/cyberartemio/wardriver-pwnagotchi-plugin)
+```
+git clone https://github.com/cyberartemio/wardriver-pwnagotchi-plugin.git
+cd wardriver-pwnagotch-plugin
+sudo cp wardriver.py /usr/local/share/pwnagotchi/custom-plugins/
+sudo cp -r wardriver_assets/ /usr/local/share/pwnagotchi/custom-plugins/
+sudo vim /etc/pwnagotchi/config.toml
+```
+Add the following code block to config.toml
+```
+# Enable the plugin
+main.plugins.wardriver.enabled = true
+# Path where SQLite db will be saved
+main.plugins.wardriver.path = "/home/pi/wardriver"
+# Enable UI status text
+main.plugins.wardriver.ui.enabled = true
+# Enable UI icon
+main.plugins.wardriver.ui.icon = true
+# Set to true if black background, false if white background
+main.plugins.wardriver.ui.icon_reverse = false
+# Position of UI status text
+main.plugins.wardriver.ui.position.x = 7
+main.plugins.wardriver.ui.position.y = 95
+# Enable WiGLE automatic file uploading
+main.plugins.wardriver.wigle.enabled = false
+# WiGLE API key (encoded)
+main.plugins.wardriver.wigle.api_key = "xyz..."
+# Enable commercial use of your reported data
+main.plugins.wardriver.wigle.donate = false
+# OPTIONAL: networks whitelist aka don't log these networks
+main.plugins.wardriver.whitelist = [
+    "network-1",
+    "network-2"
+]
+# NOTE: SSIDs in main.whitelist will always be ignored
+```
+```
+sudo systemctl restart pwnagotchi
+```
