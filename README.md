@@ -1,5 +1,15 @@
 # Beepergotchi
 
+## Hardware
+Raspberry Pi Zero 2 W
+PiSugar 3 1200 mAh battery
+Pimoroni Display Hat Mini
+ATGM 336H GPS Radio
+
+## 3D Printed Case
+Coming soon
+
+## Building the image
 Flash the latest jayofelony image  
 [jayofelony github](https://github.com/jayofelony/pwnagotchi)  
 Using [Raspberry Pi Imager](https://www.raspberrypi.com/software/)  
@@ -300,7 +310,7 @@ sudo cp /home/pi/Beepergotchi/pisugar3.py /usr/local/share/pwnagotchi/custom-plu
 sudo cp /home/pi/Beepergotchi/gpsd.py /usr/local/share/pwnagotchi/custom-plugins/gpsd.py
 ```
 
-## Disable the LED on the Pimeroni display
+## Disable the LED on the Pimoroni display hat mini
 [cyberspacemanmike's guide](https://cyberspacemanmike.com/2024/11/05/pwnagotchi-%E2%9E%A8fancygotchi-2-0/)
 ```
 sudo mkdir -p /etc/systemd/scripts
