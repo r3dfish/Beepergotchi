@@ -365,3 +365,5 @@ sudo systemctl daemon-reload
 sudo systemctl enable turnOffDisplayLED.service
 sudo reboot
 ```
+## BT-Tether plugin
+Coming soon
