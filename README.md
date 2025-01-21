@@ -268,3 +268,80 @@ main.plugins.wardriver.whitelist = [
 ```
 sudo systemctl restart pwnagotchi
 ```
+
+## Clone the Beepergotchi repo
+```
+git clone https://github.com/r3dfish/Beepergotchi.git
+```
+
+## Replace the background image
+```
+sudo cp /home/pi/Beepergotchi/320x240e-t-g.png /usr/local/share/pwnagotchi/custom-plugins/themes/cyber/img/bg/320x240e-t-g.png
+```
+
+## Configure memtemp labels and position
+```
+sudo cp /home/pi/Beepergotchi/memtemp.py /home/pi/.pwn/lib/python3.11/site-packages/pwnagotchi/plugins/default/memtemp.py
+```
+
+## Position CPU and Temp readings
+```
+sudo cp /home/pi/Beepergotchi/config-h.toml /usr/local/share/pwnagotchi/custom-plugins/themes/cyber/config/config-h.toml
+```
+
+## Remove battery label and position the battery status
+```
+sudo cp /home/pi/Beepergotchi/pisugar3.py /usr/local/share/pwnagotchi/custom-plugins/pisugar3.py
+```
+
+## Add GPS date/time and position info
+> local timezone must be set via raspi-config to convert UTC to local time
+```
+sudo cp /home/pi/Beepergotchi/gpsd.py /usr/local/share/pwnagotchi/custom-plugins/gpsd.py
+```
+
+## Disable the LED on the Pimeroni display
+[cyberspacemanmike's guide](https://cyberspacemanmike.com/2024/11/05/pwnagotchi-%E2%9E%A8fancygotchi-2-0/)
+```
+sudo mkdir -p /etc/systemd/scripts
+sudo vim /etc/systemd/scripts/turnOffDisplayLED.py
+```
+```
+import RPi.GPIO as GPIO
+
+red_pin = 17  # GPIO pin for red channel
+green_pin = 22  # GPIO pin for green channel
+blue_pin = 27  # GPIO pin for blue channel
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(red_pin, GPIO.OUT)
+GPIO.setup(green_pin, GPIO.OUT)
+GPIO.setup(blue_pin, GPIO.OUT)
+
+GPIO.output(red_pin, GPIO.LOW)
+GPIO.output(green_pin, GPIO.LOW)
+GPIO.output(blue_pin, GPIO.LOW)
+
+GPIO.cleanup()
+```
+```
+sudo vim /etc/systemd/system/turnOffDisplayLED.service
+```
+```
+[Unit]
+Description=Dim LED on Display HAT Mini
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /etc/systemd/scripts/turnOffDisplayLED.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+```
+sudo systemctl daemon-reload
+sudo systemctl enable turnOffDisplayLED.service
+sudo reboot
+```
