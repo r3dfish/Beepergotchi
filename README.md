@@ -7,11 +7,14 @@ Pimoroni Display Hat Mini
 ATGM 336H GPS Radio  
 
 ## Wiring the GPS Radio to the Pi Zero
+```
 GPS       Pi
 VCC  ->   3.3v (pin 1)
 GND  ->   GND (pin 14)
 TX   ->   UART RX (pin 10)
 RX   ->   UART TX (pin 8)
+```
+30 Gauge Wire fits through the holes in the PiSugar board nicely
 
 ## 3D Printed Case
 Coming soon  
@@ -23,7 +26,7 @@ Using [Raspberry Pi Imager](https://www.raspberrypi.com/software/)
 Boot with keyboard and monitor connected  
 Configure username/password  
 Power off  
-Swap keyboard for ethernet  
+Swap keyboard for USB to ethernet adapter  
 Boot  
 
 ## Set Local Timezone
