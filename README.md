@@ -299,6 +299,11 @@ git clone https://github.com/r3dfish/Beepergotchi.git
 sudo cp /home/pi/Beepergotchi/320x240e-t-g.png /usr/local/share/pwnagotchi/custom-plugins/themes/cyber/img/bg/320x240e-t-g.png
 ```
 
+## Replace the boot images
+```
+sudo cp -r /home/pi/Beepergotchi/boot /usr/local/share/pwnagotchi/custom-plugins/themes/cyber/img/
+```
+
 ## Configure memtemp labels and position
 ```
 sudo cp /home/pi/Beepergotchi/memtemp.py /home/pi/.pwn/lib/python3.11/site-packages/pwnagotchi/plugins/default/memtemp.py
