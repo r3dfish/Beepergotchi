@@ -187,7 +187,7 @@ Browse to the Pi's IP Address in a browser
 > click the save button on baud rate  
 > device 127.0.0.1:2947  
 > click the save button on device  
-> click gps on
+> click gps on  
 > click Position on the top menu bar and validate you have location after you get a GPS fix
 
 ## Install gpsd library for python
