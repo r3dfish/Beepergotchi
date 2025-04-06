@@ -36,10 +36,17 @@ sudo raspi-config
 	-> Timezone
 ```
 
+## Set WLAN Country
+Wifi will not work if you do not set the country
+```
+sudo raspi-config
+	-> Localization Options
+	-> WLAN Country
+```
+
 ## System Update and install vim
 ```
 sudo apt update
-sudo apt upgrade
 sudo apt install vim
 ```
 
