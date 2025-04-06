@@ -228,7 +228,10 @@ sudo vim /etc/pwnagotchi/config.toml
 > ui.display.enabled = true  
 > ui.display.rotation = 180  
 > ui.display.type = "displayhatmini"
-
+```
+sudo systemctl restart pwnagotchi
+```
+Display should now be working
 ## Enable the Fancygotchi repo
 ```
 sudo vim /etc/pwnagotchi/config.toml
