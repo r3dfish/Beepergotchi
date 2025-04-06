@@ -20,8 +20,8 @@ RX   ->   UART TX (pin 8)
 Coming soon  
 
 ## Building the image
-Flash the latest jayofelony image  
-[jayofelony github](https://github.com/jayofelony/pwnagotchi)  
+Flash version 2.9.4 of the jayofelony image, 2.9.5 crashes the broadcom driver and implodes  
+[jayofelony github](https://github.com/jayofelony/pwnagotchi/releases/tag/v2.9.4) 
 Using [Raspberry Pi Imager](https://www.raspberrypi.com/software/)  
 Boot with keyboard and monitor connected  
 Configure username/password  
@@ -45,6 +45,7 @@ sudo raspi-config
 ```
 
 ## System Update and install vim
+DO NOT run apt upgrade, it will break pwnagotchi
 ```
 sudo apt update
 sudo apt install vim
