@@ -20,8 +20,8 @@ RX   ->   UART TX (pin 8)
 Coming soon  
 
 ## Building the image
-Flash version 2.9.4 of the jayofelony image, 2.9.5 crashes the broadcom driver and implodes  
-[jayofelony github](https://github.com/jayofelony/pwnagotchi/releases/tag/v2.9.4) 
+Flash the 64 bit version 2.9.4 of the jayofelony image, 2.9.5 crashes the broadcom driver and implodes  
+[jayofelony github](https://github.com/jayofelony/pwnagotchi/releases/tag/v2.9.4)  
 Using [Raspberry Pi Imager](https://www.raspberrypi.com/software/)  
 Boot with keyboard and monitor connected  
 Configure username/password  
