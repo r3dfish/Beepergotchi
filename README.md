@@ -391,16 +391,18 @@ sudo reboot
 ```
 sudo cp /home/pi/Beepergotchi/bt-tether.py /home/pi/.pwn/lib/python3.11/site-packages/pwnagotchi/plugins/default/
 ```
+## Enable bt-tether plugin
+```
+Browse to port 8080 in a web browser on the Pi's IP address  
+> click on plugins  
+> enable bt-tether
+```
+
 ## Android
 
 For Android, you must enable bluetooth tethering prior to connecting
 ```
 Settings -> Connections -> Mobile Hotspot and Tethering -> Bluetooth tethering
-```
-```
-Browse to port 8080 in a web browser on the Pi's IP address  
-> click on plugins  
-> enable bt-tether
 ```
 ```
 sudo bluetoothctl
