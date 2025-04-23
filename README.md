@@ -81,7 +81,11 @@ sudo vim /etc/pwnagotchi/config.toml
 ```
 Add these settings to config.toml:  
 > main.plugins.pisugar3.enabled = true  
-> main.plugins.pisugar3.shutdown = 5  
+> main.plugins.pisugar3.shutdown = 5
+
+> Optional - change the name of the pwnagotchi  
+> main.name = "Beepergotchi"
+
 ```
 sudo systmctl restart pwnagotchi
 ```
