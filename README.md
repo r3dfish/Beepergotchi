@@ -381,5 +381,50 @@ sudo systemctl daemon-reload
 sudo systemctl enable turnOffDisplayLED.service
 sudo reboot
 ```
-## BT-Tether plugin
-Coming soon
+# BT-Tether plugin
+
+## Replace bt-tether.py
+```
+sudo cp /home/pi/Beepergotchi/bt-tether.py /home/pi/.pwn/lib/python3.11/site-packages/pwnagotchi/plugins/default/
+```
+## Android
+
+For Android, you must enable bluetooth tethering prior to connecting
+```
+Settings -> Connections -> Mobile Hotspot and Tethering -> Bluetooth tethering
+```
+```
+Browse to port 8080 in a web browser on the Pi's IP address  
+> click on plugins  
+> enable bt-tether
+```
+```
+sudo bluetoothctl
+scan on
+discoverable on
+```
+Copy the phone's mac address and name once it is discovered
+```
+sudo vim /etc/pwnagotchi/config.toml
+```
+```
+main.plugins.bt-tether.phone = "android"
+main.plugins.bt-tether.phone-name = "<<phone name>>"
+main.plugins.bt-tether.mac = "<<phone mac>>"
+```
+Find the pwnagotchi in the list of available bluetooth devices on the Android phone and click it to begin pairing  
+type yes in bluetoothctl to authorize pairing  
+click on "pair" on the Android phone  
+once bluetoothctl says it has paired, run the following command in bluetoothctl:  
+```
+trust "<<phone mac>>"
+exit
+sudo systemctl restart pwnagotchi
+```
+After a restart, the pwnagotchi should automatically connect to the Android phone via bluetooth  
+The IP address of the pwnagotchi will be displayed on the screen in the bottom right  
+you can navigate to this IP address in a browser on the Android phone to interact with the pwnagotchi  
+NOTE: If you disable bluetooth, you will have to manually re-enable bluetooth tethering on the Android phone or the pwnagotchi will not connect  
+
+## iOS
+Coming Soon
