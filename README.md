@@ -400,7 +400,7 @@ Browse to port 8080 in a web browser on the Pi's IP address
 
 ## Android
 
-For Android, you must enable bluetooth tethering prior to connecting
+For Android, you must enable bluetooth tethering prior to pairing
 ```
 Settings -> Connections -> Mobile Hotspot and Tethering -> Bluetooth tethering
 ```
@@ -433,4 +433,34 @@ you can navigate to this IP address in a browser on the Android phone to interac
 NOTE: If you disable bluetooth, you will have to manually re-enable bluetooth tethering on the Android phone or the pwnagotchi will not connect  
 
 ## iOS
-Coming Soon
+
+For iOS, you must enable Personal Hotspot prior to pairing
+```
+Settings -> Personal Hotspot -> Allow Others to Join
+```
+```
+sudo bluetoothctl
+scan on
+discoverable on
+```
+Copy the phone's mac address and name once it is discovered
+```
+sudo vim /etc/pwnagotchi/config.toml
+```
+```
+main.plugins.bt-tether.phone = "ios"
+main.plugins.bt-tether.phone-name = "<<phone name>>"
+main.plugins.bt-tether.mac = "<<phone mac>>"
+```
+Find the pwnagotchi in the list of available bluetooth devices on the iOS phone and click it to begin pairing  
+type yes in bluetoothctl to authorize pairing  
+click on "pair" on the iOS phone  
+once bluetoothctl says it has paired, run the following command in bluetoothctl:  
+```
+trust "<<phone mac>>"
+exit
+sudo reboot
+```
+After a restart, the pwnagotchi should automatically connect to the iOS phone via bluetooth  
+The IP address of the pwnagotchi will be displayed on the screen in the bottom right  
+you can navigate to this IP address in a browser on the iOS phone to interact with the pwnagotchi  
