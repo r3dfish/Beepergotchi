@@ -69,6 +69,8 @@ You should see the Pi Sugar control interface
 Browse to port 8080 in a web browser on the Pi's IP address  
 Default credentials are changeme/changeme  
 Click on plugins  
+You must make a change to a plugin to generate the file  
+If you do not want to disable anything, disable one and reenable it  
 
 > Optional - disable grid plugin
 
