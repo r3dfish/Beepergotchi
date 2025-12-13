@@ -115,7 +115,7 @@ sudo apt remove gpsd
 The fix for 3.22 only pulling the location from first fix can be found on this thread post:  
 [why does gpsd not update a location past its first fix](https://raspberrypi.stackexchange.com/questions/136196/why-does-gpsd-not-update-a-location-past-its-first-fix)  
 ```
-sudo apt install scons
+sudo apt install scons cppcheck
 wget http://download.savannah.gnu.org/releases/gpsd/gpsd-3.25.tar.gz
 tar -zxvf gpsd-3.25.tar.gz
 cd gpsd-3.25/
