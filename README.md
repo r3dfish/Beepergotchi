@@ -25,6 +25,7 @@ Flash the 64 bit version 2.9.4 of the jayofelony image, 2.9.5 crashes the broadc
 Using [Raspberry Pi Imager](https://www.raspberrypi.com/software/)  
 Boot with keyboard and monitor connected  
 Configure username/password  
+Default user/pass for a Raspberry pi build are pi/raspberry  
 Power off  
 Swap keyboard for USB to ethernet adapter  
 Boot  
@@ -61,6 +62,7 @@ bash pisugar-power-manager.sh -c release
 
 Browse to port 8421 in a web browser on the Pi's IP address  
 Login with the credentials you configured  
+Default credentials are admin/admin  
 You should see the Pi Sugar control interface  
 
 ## Generate /etc/pwnagotchi/config.toml by loading plugins page
