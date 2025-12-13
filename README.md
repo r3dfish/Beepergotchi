@@ -67,6 +67,7 @@ You should see the Pi Sugar control interface
 
 ## Generate /etc/pwnagotchi/config.toml by loading plugins page
 Browse to port 8080 in a web browser on the Pi's IP address  
+Default credentials are changeme/changeme
 Click on plugins  
 
 > Optional - disable grid plugin
