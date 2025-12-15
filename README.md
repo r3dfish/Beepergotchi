@@ -1,7 +1,7 @@
 # Beepergotchi
 
 ## Hardware
-[Raspberry Pi Zero 2 W](https://amzn.to/4q8UD0O)
+[Raspberry Pi Zero 2 W](https://amzn.to/4q8UD0O)  
 [PiSugar 3 1200 mAh battery](https://amzn.to/4rXOKFA)  
 [Pimoroni Display Hat Mini](https://www.pishop.us/product/display-hat-mini/)  
 [ATGM 336H GPS Radio](https://amzn.to/4oXFvTb)  
