@@ -5,6 +5,7 @@
 [PiSugar 3 1200 mAh battery](https://amzn.to/4rXOKFA)  
 [Pimoroni Display Hat Mini](https://www.pishop.us/product/display-hat-mini/)  
 [ATGM 336H GPS Radio](https://amzn.to/4oXFvTb)  
+[16 GB Micro SD](https://amzn.to/4pzX2BR)  
 
 ## Wiring the GPS Radio to the Pi Zero
 ```
