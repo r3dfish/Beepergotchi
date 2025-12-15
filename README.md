@@ -18,7 +18,7 @@ RX   ->   UART TX (pin 8)
 30 Gauge Wire fits through the holes in the PiSugar board nicely
 
 ## 3D Printed Case
-Coming soon  
+Case files can be found on [Thingiverse](https://www.thingiverse.com/thing:7236679)  
 
 ## Building the image
 Flash the 64 bit version 2.9.4 of the jayofelony image, 2.9.5 crashes the broadcom driver and implodes  
