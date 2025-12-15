@@ -45,6 +45,44 @@ sudo raspi-config
 	-> WLAN Country
 ```
 
+## Set Serial to communicate with the GPS radio
+```
+sudo raspi-config
+   -> Interface Options
+   -> Serial Port
+   -> Disable login shell over serial
+   -> Enable serial port hardware
+reboot
+```
+
+# Automated Install
+
+## Generate /etc/pwnagotchi/config.toml by loading plugins page
+Browse to port 8080 in a web browser on the Pi's IP address  
+Default credentials are changeme/changeme  
+Click on plugins  
+You must make a change to a plugin to generate the file  
+If you do not want to disable anything, disable one and reenable it  
+
+> Optional - disable grid plugin
+
+validate /etc/pwnagotchi/config.toml now exists
+
+
+## Clone the Beepergotchi repo
+```
+git clone https://github.com/r3dfish/Beepergotchi.git
+```
+
+## Run the automated install script
+```
+cd Beepergotchi
+chmod +x beepergotchi_installer.sh
+./beepergotchi_installer.sh
+```
+
+# Manual Install
+
 ## System Update and install vim
 DO NOT run apt upgrade, it will break pwnagotchi
 ```
