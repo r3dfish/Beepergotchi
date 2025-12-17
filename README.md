@@ -20,6 +20,12 @@ RX   ->   UART TX (pin 8)
 ## 3D Printed Case
 Case files can be found on [Thingiverse](https://www.thingiverse.com/thing:7236679)  
 
+## Default Credentials  
+port 22 ssh: pi/raspberry  
+port 8421 Pi Sugar 3: admin/admin  
+port 8080 Pwnagotchi web interface: changeme/changeme  
+port 80 Bettercap: pwnagotchi/pwnagotchi  
+
 ## Building the image
 Flash the 64 bit version 2.9.4 of the jayofelony image, 2.9.5 crashes the broadcom driver and implodes  
 [jayofelony github](https://github.com/jayofelony/pwnagotchi/releases/tag/v2.9.4)  
